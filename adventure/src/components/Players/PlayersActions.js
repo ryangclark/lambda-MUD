@@ -30,6 +30,7 @@ export const addPlayer = token => dispatch => {
 		.then(() => dispatch(getPlayerStatus(token)))
 		.then(() => dispatch(setActivePlayer(token)))
 		.then(() => localStorage.setItem('playerTokens', tokens.toString()))
+		.then(() => dispatch({ type: ADD_PLAYER_SUCCESS }))
 		.catch(error => {
 			dispatch({
 				payload: 'Unable to validate token', 
@@ -126,15 +127,17 @@ export const INIT_PLAYERS_SUCCESS = 'INIT_PLAYERS_SUCCESS';
 
 export const initPlayers = () => dispatch => {
 	dispatch({ type: INIT_PLAYERS_START })
-	const tokens = localStorage.getItem('playerTokens').split(',');
+	let tokens = localStorage.getItem('playerTokens');
 
-	if (!tokens || !tokens[0]) {
+	if (!tokens || !tokens.length) {
 		console.log('no tokens:', tokens)
 		localStorage.setItem('playerTokens', '')
 		return dispatch({
 			type: INIT_PLAYERS_EMPTY
 		})
 	}
+
+	tokens = tokens.split(',')
 
 	let promises = tokens.map(token =>
 		Promise.resolve()
