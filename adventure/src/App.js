@@ -1,14 +1,17 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+
+import PlayersContainer from './components/Players/PlayersContainer';
 
 function App() {
   return (
-    /* <div className="App"> */
+    <React.Fragment>
       <header className="App-header">
         Header
       </header>
-    /* </div> */
+
+      <PlayersContainer />
+    </React.Fragment>
   );
 }
 
