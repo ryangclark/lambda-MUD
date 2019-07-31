@@ -1,19 +1,9 @@
 import { combineReducers } from 'redux';
 
+import mapReducer from '../components/Map/MapReducer';
 import playersReducer from '../components/Players/PlayersReducer';
 
 export default combineReducers({
+	map: mapReducer,
 	players: playersReducer,
 })
-
-// currentRoom: {
-// 		"cooldown": null,
-// 		"coordinates": null,
-// 		"description": '',
-// 		"errors": [],
-// 		"exits": [],
-// 		"messages": []
-// 		"room_id": null,
-// 	  	"title": '',
-// 	},
-// 	map: null,
