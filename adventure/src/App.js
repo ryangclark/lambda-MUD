@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 
+import MapContainer from './components/Map/MapContainer';
 import PlayersContainer from './components/Players/PlayersContainer';
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
       </header>
 
       <PlayersContainer />
+      <MapContainer />
     </React.Fragment>
   );
 }
