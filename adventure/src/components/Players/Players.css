@@ -1,0 +1,62 @@
+.players-container {
+	background: rgba(0,0,0,0.1);
+}
+
+.players-container > header {
+	border: 1px solid rgba(0,0,0,0.8);
+	display: flex;
+}
+
+.players-container > header > h2 {
+	background: rgba(0,0,0,0.2);
+	padding: 0 0.25rem;
+	text-orientation: upright;
+	writing-mode: vertical-rl;
+}
+
+.players-container > header > .icons-container {
+	align-items: center;
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.icons-container > .add-player {
+	border-left: 1px solid rgba(0,0,0,0.2);
+	cursor: pointer;
+	font-size: 3rem;
+	height: 100%;
+	padding: 0.7rem 1.5rem 0;
+}
+
+.icons-container > .player-active {
+	border: 4px solid yellow;
+	position: relative;
+}
+
+.icons-container > .player-icon {
+	background: rgba(0,0,0,0.8);
+	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	justify-content: center;
+}
+
+.icons-container > .player-active::after {
+	background: yellow;
+	bottom: -5px;
+	/*clip-path: polygon(50% 0, 50% 0, 50% 100%, 50% 100%);*/
+	content: '';
+	height: 4px;
+	left: -4px;
+	right: -4px;
+	position: absolute;
+}
+
+.icons-container > .player-icon > div {
+	color: white;
+	font-size: 3rem;
+	padding: 0.5rem 1.5rem 0;
+	text-transform: uppercase;
+}
