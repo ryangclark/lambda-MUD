@@ -37,7 +37,7 @@ const lookUp = {
 const Room = props => {
 	return (
 		<svg
-			style={{ 'gridArea': `${props.column} / ${props.row} / ${props.column} / ${props.row}` }}
+			style={{ 'gridArea': ` -${props.row} / ${props.column} / -${props.row} / ${props.column}` }}
 			viewBox="-50 -50 100 100"
 		>
 			<circle 
