@@ -3,10 +3,12 @@ import {
 	GET_MAP_DATA_FAILURE,
 	GET_MAP_DATA_START,
 	GET_MAP_DATA_SUCCESS,
+	SET_CURRENT_ROOM,
 	UPDATE_EXITS,
 } from './MapActions'
 
 const initialState = {
+	currentRoom: null,
 	rooms: {},
 	roomCount: 0,
 }
@@ -49,6 +51,11 @@ function mapReducer(state = initialState, action) {
 			return state
 		case GET_MAP_DATA_FAILURE:
 			return state
+		case SET_CURRENT_ROOM:
+			return {
+				...state,
+				currentRoom: action.id
+			}
 		case UPDATE_EXITS:
 			return {
 				...state,

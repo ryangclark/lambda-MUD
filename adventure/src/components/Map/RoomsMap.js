@@ -8,9 +8,9 @@ import './RoomsMap.css';
 const RoomsMap = props => {
 	// const [gridData, setGridData] = useState();
 	const [grid, setGrid] = useState({
-		height: 15,
+		height: 7,
 		initialized: false,
-		width: 15,
+		width: 7,
 		xOrigin: 0,
 		yOrigin: 0,
 	})
@@ -20,26 +20,45 @@ const RoomsMap = props => {
 	  ***/
 	// const [origin, setOrigin] = useState()
 
-	const [roomsArray, setRoomsArray] = useState([])
+	// const [roomsArray, setRoomsArray] = useState([])
+
+	// useEffect(() => {
+	// 	if (!props.rooms) return
+
+	// 	setRoomsArray(Object.entries(props.rooms))
+	// }, [props.rooms])
 
 	useEffect(() => {
-		if (!props.rooms) return
-
-		setRoomsArray(Object.entries(props.rooms))
-	}, [props.rooms])
-
-	useEffect(() => {
-		if (!grid.initialized && roomsArray.length) {
-			let firstRoom = roomsArray[0][1]
-			// console.log(firstRoom)
+		if (props.currentRoom) {
+			let room = props.rooms[props.currentRoom]
 			setGrid(prevState => ({
 				...prevState,
 				initialized: true,
-				xOrigin: firstRoom.coordinates.x - Math.ceil(prevState.width / 2),
-				yOrigin: firstRoom.coordinates.y - Math.ceil(prevState.height / 2)
+				xOrigin: room.coordinates.x - Math.ceil(prevState.width / 2),
+				yOrigin: room.coordinates.y - Math.ceil(prevState.height / 2)
 			}))
 		}
-	}, [grid.initialized, roomsArray])
+	}, [props.currentRoom, props.rooms])
+
+	let rooms = []
+
+	for (const [roomId, roomData] of Object.entries(props.rooms)) {
+		if (roomData.coordinates.x < grid.xOrigin || 
+			roomData.coordinates.x > grid.xOrigin + grid.width ||
+			roomData.coordinates.y < grid.yOrigin ||
+			roomData.coordinates.y > grid.yOrigin + grid.height) {
+			continue
+		}
+		rooms.push(
+			<Room
+				column={roomData.coordinates.x - grid.xOrigin}
+				exits={roomData.exits}
+				roomId={roomData.room_id}
+				key={roomId}
+				row={roomData.coordinates.y - grid.yOrigin + 1}
+			/>
+		)
+	}
 
 	// const testData = [
 	// 	{column: 1, edges: {'e': '1'}, row: 1},
@@ -59,36 +78,19 @@ const RoomsMap = props => {
 	// init by iterating over rooms, calling display room for each
 
 	return (
-		<React.Fragment>
-			<svg width="100%" height="100%">
-				Sorry, your browser does not support inline SVG.
-			</svg>
-			<div
-				className="rooms-map"
-				style={{
-					'display': 'grid',
-					'gridTemplateColumns': `repeat(${grid.width}, 1fr)`,
-					'gridTemplateRows': `repeat(${grid.height}, 1fr)`,
-					'height': '100%'
-				}}
-			>
-				{[...Array(grid.width)].map((i, index) => <p key={index}>{index + 1 + grid.xOrigin}</p>)}
+		<div
+			className="rooms-map"
+			style={{
+				'display': 'grid',
+				'gridTemplateColumns': `repeat(${grid.width}, 1fr)`,
+				'gridTemplateRows': `repeat(${grid.height}, 1fr)`,
+				'height': '100%'
+			}}
+		>
+			{[...Array(grid.width)].map((i, index) => <p key={index}>{index + 1 + grid.xOrigin}</p>)}
 
-				{roomsArray.map(([roomId, roomData]) => { 
-					// RESIZE
-					// if (roomData.coordinates.x < )
-					return (
-						<Room
-							column={roomData.coordinates.x - grid.xOrigin}
-							exits={roomData.exits}
-							roomId={roomData.room_id}
-							key={roomId}
-							row={roomData.coordinates.y - grid.yOrigin}
-						/>
-					)
-				})}
-			</div>
-		</React.Fragment>
+			{rooms}
+		</div>
 	)
 }
 

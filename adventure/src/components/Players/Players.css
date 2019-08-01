@@ -2,6 +2,13 @@
 	background: rgba(0,0,0,0.1);
 }
 
+/* desktop */
+@media only screen and (min-width: 40rem) {
+	.players-container {
+		grid-column: 2 / 6;
+	}
+}
+
 .players-container > header {
 	border: 1px solid rgba(0,0,0,0.8);
 	display: flex;
@@ -59,4 +66,24 @@
 	font-size: 3rem;
 	padding: 0.5rem 1.5rem 0;
 	text-transform: uppercase;
+}
+
+.player-status-container {
+	display: grid;
+	grid-gap: 1rem;
+	grid-template-columns: 2fr 1fr 3fr 1fr;
+	padding: 0 1rem;
+}
+
+.player-status-container > h2 {
+	grid-column: 1 / -1;
+	font-size: 1.5rem;
+	font-weight: bold;
+	margin: 1rem 0;
+	width: 100%;
+}
+
+.stat-data {
+	padding-right: 0.5rem;
+	text-align: right;
 }

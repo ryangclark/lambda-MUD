@@ -4,18 +4,9 @@
 export const ADD_ROOM = 'ADD_ROOM';
 
 export const addRoom = roomData => dispatch => {
-	const stringCoordinates = roomData.coordinates.match(/\d+/g)
 	
-	// let exits = {}
-	// for (let direction of roomData.exits) {
-	// 	exits[direction] = '?'
-	// }
-
 	let payload = {
-		coordinates: {
-			x: parseInt(stringCoordinates[0]),
-			y: parseInt(stringCoordinates[1])
-		},
+		coordinates: intCoordinates(roomData.coordinates),
 		description: roomData.description,
 		elevation: roomData.elevation,
 		exits: roomData.exits,
@@ -40,15 +31,22 @@ export const getMapData = () => dispatch => {
 
 }
 
+function intCoordinates(coordinates) {
+	const stringCoordinates = coordinates.match(/\d+/g)
+	return {
+		x: parseInt(stringCoordinates[0]),
+		y: parseInt(stringCoordinates[1])
+	}
+}
+
 //
-export const INIT_MAP_FAILURE = 'INIT_MAP_FAILURE';
-export const INIT_MAP_START = 'INIT_MAP_START'; 
-export const INIT_MAP_SUCCESS = 'INIT_MAP_SUCCESS';
+export const SET_CURRENT_ROOM = 'SET_CURRENT_ROOM';
 
-export const initMap = () => (dispatch, getState) => {
-	dispatch({ type: INIT_MAP_START })
-
-
+export const setCurrentRoom = (roomId) => dispatch => {
+	dispatch({
+		id: roomId,
+		type: SET_CURRENT_ROOM
+	})
 }
 
 // 

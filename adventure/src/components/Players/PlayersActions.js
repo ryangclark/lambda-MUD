@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { addRoom, updateExits } from '../Map/MapActions';
+import { addRoom, setCurrentRoom, updateExits } from '../Map/MapActions';
 
 //
 export const ADD_PLAYER_FAILURE = 'ADD_PLAYER_FAILURE';
@@ -146,6 +146,7 @@ export const initPlayers = () => dispatch => {
 		.then(() => dispatch(getPlayerRoom(token)))
 		.then(res => {
 			dispatch(addRoom(res.roomData))
+			dispatch(setCurrentRoom(res.roomData.room_id))
 			return new Promise(resolve => 
 					setTimeout(resolve, res.cooldown * 1000)
 				)
@@ -157,7 +158,6 @@ export const initPlayers = () => dispatch => {
 	Promise.all(promises)
 	.then(() => dispatch(setActivePlayer(tokens[0])))
 	.then(() => dispatch({ type: INIT_PLAYERS_SUCCESS }))
-	// .then(() => dispatch(initMap(tokens[0])))
 	.catch(error => console.error(error))
 }
 
@@ -212,6 +212,7 @@ export const movePlayer = (direction, currentRoom, token) => dispatch => {
 			token,
 			type: MOVE_PLAYER_SUCCESS
 		})
+		dispatch(setCurrentRoom(res.data.room_id))
 	})
 	.catch(error => {
 		dispatch({
