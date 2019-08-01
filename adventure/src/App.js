@@ -6,14 +6,14 @@ import PlayersContainer from './components/Players/PlayersContainer';
 
 function App() {
   return (
-    <React.Fragment>
-      <header className="App-header">
+    <div className="app-container">
+      <header className="App-header grid-all">
         Header
       </header>
 
       <PlayersContainer />
       <MapContainer />
-    </React.Fragment>
+    </div>
   );
 }
 
