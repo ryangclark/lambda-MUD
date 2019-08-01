@@ -77,7 +77,6 @@ const RoomsMap = props => {
 				{roomsArray.map(([roomId, roomData]) => { 
 					// RESIZE
 					// if (roomData.coordinates.x < )
-					// console.log('roomData.exits', roomData.exits)
 					return (
 						<Room
 							column={roomData.coordinates.x - grid.xOrigin}
