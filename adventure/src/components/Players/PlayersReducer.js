@@ -12,6 +12,9 @@ import {
 	INIT_PLAYERS_FAILURE,
 	INIT_PLAYERS_START,
 	INIT_PLAYERS_SUCCESS,
+	MOVE_PLAYER_FAILURE,
+	MOVE_PLAYER_START,
+	MOVE_PLAYER_SUCCESS,
 	CLOSE_ADD_PLAYER_FORM,
 	OPEN_ADD_PLAYER_FORM,
 	SET_ACTIVE_PLAYER,
@@ -209,6 +212,28 @@ function playersReducer(state = initialState, action) {
 					gettingData: false,
 					header: 'problem'
 				}
+			}
+		case MOVE_PLAYER_START:
+			return {
+				...state,
+				error: null,
+			}
+		case MOVE_PLAYER_SUCCESS:
+			// console.log('MOVE_PLAYER_SUCCESS', action.payload)
+			return {
+				...state,
+				players: {
+					...state.players,
+					[action.token]: {
+						...state.players[action.token],
+						room: action.payload
+					}
+				},
+			}
+		case MOVE_PLAYER_FAILURE:
+			return {
+				...state,
+				error: action.payload
 			}
 		case CLOSE_ADD_PLAYER_FORM:
 			return {

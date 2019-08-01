@@ -1,22 +1,11 @@
 import React from 'react';
 import './RoomsMap.css';
 
-// {'n': '?', 's': '?', 'w': '?', 'e': '?'}
-
 const radius = 16
 const stroke = "green"
 const strokeDasharray = "5,5"
 const strokeWidth = radius / 4
 const strokeOffset = strokeWidth / 2
-
-// const n = (
-// 	<line
-// 		x1={strokeOffset} y1={radius} x2={strokeOffset} y2="50"
-// 		stroke={stroke}
-// 		stroke-dasharray={strokeDasharray}
-// 		stroke-width={strokeWidth} 
-// 	/>
-// )
 
 const lookUp = {
 	e: {
@@ -45,12 +34,10 @@ const lookUp = {
 	}
 }
 
-console.log('loopUp Test:', lookUp['n'].x1)
-
 const Room = props => {
 	return (
-		<svg 
-			style={{ 'gridColumn': `${props.column}`, 'gridRow': `${props.row}` }}
+		<svg
+			style={{ 'gridArea': `${props.column} / ${props.row} / ${props.column} / ${props.row}` }}
 			viewBox="-50 -50 100 100"
 		>
 			<circle 
@@ -59,7 +46,7 @@ const Room = props => {
 				stroke={stroke} strokeWidth={strokeWidth}
 			/>
 
-			{Object.entries(props.edges).map(([direction, value], index) => (
+			{Object.entries(props.exits).map(([direction, value], index) => (
 				<line
 					key={`${index}-${direction}`}
 					stroke={stroke}
@@ -76,8 +63,3 @@ const Room = props => {
 }
 
 export default Room
-
-// <line
-// 	x1="16" y1="2" x2="50" y2="2"
-// 	stroke="green" stroke-dasharray="5,5" stroke-width="4" 
-// />

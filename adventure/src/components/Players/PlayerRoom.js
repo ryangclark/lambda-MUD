@@ -18,10 +18,10 @@ const PlayerRoom = props => {
 						<th>Elevation:</th>
 						<td>{playerRoom && playerRoom.elevation}</td>
 					</tr>
-					<tr>
+					{/* <tr>
 						<th>Exits:</th>
 						<td>{playerRoom && playerRoom.exits}</td>
-					</tr>
+					</tr> */}
 					<tr>
 						<th>Description:</th>
 						<td>{playerRoom && playerRoom.description}</td>

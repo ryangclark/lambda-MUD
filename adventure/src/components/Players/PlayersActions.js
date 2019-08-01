@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { addRoom, updateExits } from '../Map/MapActions';
 
 //
 export const ADD_PLAYER_FAILURE = 'ADD_PLAYER_FAILURE';
@@ -41,9 +42,14 @@ export const addPlayer = token => dispatch => {
 		})
 }
 
-// function getPlayerToken(index) {
-// 	return localStorage.getItem('playerTokens')[index]
-// }
+// convert `res.data.exits` to the object we need
+function convertExits(exitsString) {
+	let exits = {}
+	for (let direction of exitsString) {
+		exits[direction] = '?'
+	}
+	return exits
+}
 
 //
 export const GET_PLAYER_ROOM_FAILURE = 'GET_PLAYER_ROOM_FAILURE';
@@ -63,17 +69,13 @@ export function getPlayerRoom(token) {return dispatch => {
 		if (res.status === 200) {
 			dispatch({
 				token,
-				payload: res.data,
+				payload: {...res.data, exits: convertExits(res.data.exits)},
 				type: GET_PLAYER_ROOM_SUCCESS
 			});
-			return res.data.cooldown
-		} else {
-			dispatch({
-				token,
-				payload: res.data,
-				type: GET_PLAYER_ROOM_FAILURE
-			});
-			return res.data.cooldown
+			return {
+				cooldown: res.data.cooldown,
+				roomData: {...res.data, exits: convertExits(res.data.exits)}
+			}
 		}
 	}).catch(error => {
 		dispatch({
@@ -142,9 +144,12 @@ export const initPlayers = () => dispatch => {
 	let promises = tokens.map(token =>
 		Promise.resolve()
 		.then(() => dispatch(getPlayerRoom(token)))
-		.then(cooldown => new Promise(resolve => 
-			setTimeout(resolve, cooldown * 1000)
-		))
+		.then(res => {
+			dispatch(addRoom(res.roomData))
+			return new Promise(resolve => 
+					setTimeout(resolve, res.cooldown * 1000)
+				)
+		})
 		.then(() => dispatch(getPlayerStatus(token)))
 		.catch(error => console.error(error))
 	);
@@ -152,7 +157,60 @@ export const initPlayers = () => dispatch => {
 	Promise.all(promises)
 	.then(() => dispatch(setActivePlayer(tokens[0])))
 	.then(() => dispatch({ type: INIT_PLAYERS_SUCCESS }))
+	// .then(() => dispatch(initMap(tokens[0])))
 	.catch(error => console.error(error))
+}
+
+//
+export const MOVE_PLAYER_FAILURE = 'MOVE_PLAYER_FAILURE';
+export const MOVE_PLAYER_START = 'MOVE_PLAYER_START';
+export const MOVE_PLAYER_SUCCESS = 'MOVE_PLAYER_SUCCESS';
+
+export const movePlayer = (direction, currentRoom, token) => dispatch => {
+	// console.log('move token:', token)
+	dispatch({ type: MOVE_PLAYER_START })
+
+	let inverseExits = {n: 's', s: 'n', w: 'e', e: 'w'}
+
+	let knownExit = currentRoom.exits[direction] === '?' ? false : currentRoom.exits[direction]
+
+	let reqBody = knownExit ? {direction: direction} :
+		{direction: direction, next_room_id: currentRoom.exits[direction]}
+
+	axios.post(
+		'https://lambda-treasure-hunt.herokuapp.com/api/adv/move/',
+		reqBody,
+		{headers: {'Authorization': `Token ${token}`}}
+	)
+	.then(res => {
+		// console.log('move res.data:', res.data)
+		let newExits = {
+			...convertExits(res.data.exits),
+			[inverseExits[direction]]: currentRoom.room_id
+		}
+
+		if (!knownExit) {
+			dispatch(updateExits(
+				currentRoom.room_id,
+				{...currentRoom.exits, [direction]: res.data.room_id}
+			))
+			
+			dispatch(addRoom({...res.data, exits: newExits}))
+		}
+
+		dispatch({
+			payload: {...res.data, exits: newExits},
+			token,
+			type: MOVE_PLAYER_SUCCESS
+		})
+	})
+	.catch(error => {
+		dispatch({
+			payload: error,
+			type: MOVE_PLAYER_FAILURE
+		})
+		console.log(error)
+	})
 }
 
 //
