@@ -9,7 +9,10 @@ function makePlayerIcons(players, activeToken, onClickFunc) {
 			key={index}
 			onClick={onClickFunc}
 		>
-			<div>{players[token].status.name.slice(0, 1)}</div>
+			<div>{
+				players[token].status && 
+				players[token].status.name.slice(0, 1)}
+			</div>
 		</div>)
 	)
 }
