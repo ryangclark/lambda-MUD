@@ -173,10 +173,12 @@ export const movePlayer = (direction, currentRoom, token) => dispatch => {
 	let inverseExits = {n: 's', s: 'n', w: 'e', e: 'w'}
 
 	let knownExit = currentRoom.exits[direction] === '?' ? false : currentRoom.exits[direction]
+	console.log('knownExit:', currentRoom.room_id, knownExit)
 
-	let reqBody = knownExit ? {direction: direction} :
-		{direction: direction, next_room_id: currentRoom.exits[direction]}
-
+	let reqBody = knownExit ?  
+		{direction: direction, next_room_id: currentRoom.exits[direction].toString()} : 
+		{direction: direction}
+		
 	axios.post(
 		'https://lambda-treasure-hunt.herokuapp.com/api/adv/move/',
 		reqBody,
@@ -184,6 +186,13 @@ export const movePlayer = (direction, currentRoom, token) => dispatch => {
 	)
 	.then(res => {
 		// console.log('move res.data:', res.data)
+		if (res.status !== 200) {
+			return dispatch({
+				payload: res.data,
+				token,
+				type: MOVE_PLAYER_FAILURE
+			})
+		}
 		let newExits = {
 			...convertExits(res.data.exits),
 			[inverseExits[direction]]: currentRoom.room_id
@@ -207,6 +216,7 @@ export const movePlayer = (direction, currentRoom, token) => dispatch => {
 	.catch(error => {
 		dispatch({
 			payload: error,
+			token,
 			type: MOVE_PLAYER_FAILURE
 		})
 		console.log(error)

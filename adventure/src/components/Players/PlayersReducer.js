@@ -233,7 +233,11 @@ function playersReducer(state = initialState, action) {
 		case MOVE_PLAYER_FAILURE:
 			return {
 				...state,
-				error: action.payload
+				error: action.payload,
+				[action.token]: {
+					...state.players[action.token],
+					errors: [action.payload]
+				}
 			}
 		case CLOSE_ADD_PLAYER_FORM:
 			return {
