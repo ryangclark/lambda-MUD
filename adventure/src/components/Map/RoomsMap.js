@@ -6,28 +6,18 @@ import Room from './Room';
 import './RoomsMap.css';
 
 const RoomsMap = props => {
-	// const [gridData, setGridData] = useState();
 	const [grid, setGrid] = useState({
 		height: 7,
 		initialized: false,
 		width: 7,
+		/** 
+		  * origin should always be one less than grid column 1, row 1
+		  * meaning the origin won't actually be on the grid
+		  ***/
 		xOrigin: 0,
 		yOrigin: 0,
 	})
-	/** 
-	  * origin should always be one less than grid column 1, row 1
-	  * meaning the origin won't actually be on the grid
-	  ***/
-	// const [origin, setOrigin] = useState()
-
-	// const [roomsArray, setRoomsArray] = useState([])
-
-	// useEffect(() => {
-	// 	if (!props.rooms) return
-
-	// 	setRoomsArray(Object.entries(props.rooms))
-	// }, [props.rooms])
-
+	
 	useEffect(() => {
 		if (props.currentRoom) {
 			let room = props.rooms[props.currentRoom]
@@ -60,23 +50,6 @@ const RoomsMap = props => {
 		)
 	}
 
-	// const testData = [
-	// 	{column: 1, edges: {'e': '1'}, row: 1},
-	// 	{column: 2, edges: {'s': '1', 'w': '1',}, row: 1},
-	// 	{column: 2, edges: {'n': '1', 's': '?', 'w': '?', 'e': '1'}, row: 2},
-	// 	{column: 2, edges: {'n': '1', 's': '?', 'w': '?', 'e': '1'}, row: 3}
-	// ]
-	// const testData = {
-	// 	1: {column: 7, edges: {'n': '?', 's': '?', 'w': '?', 'e': '?'}, row: 7}
-	// }
-
-	// console.log('props.rooms', props.rooms)
-	// console.log(grid)
-
-	// create rooms object => pull current room to start
-	// create display room function
-	// init by iterating over rooms, calling display room for each
-
 	return (
 		<div
 			className="rooms-map"
@@ -87,7 +60,17 @@ const RoomsMap = props => {
 				'height': '100%'
 			}}
 		>
-			{[...Array(grid.width)].map((i, index) => <p key={index}>{index + 1 + grid.xOrigin}</p>)}
+			{[...Array(grid.width)].map((i, index) => 
+				<p
+					key={index}
+					style={{
+						'color': 'rgba(0,0,0,0.5)',
+						'fontFamily': 'sans-serif',
+						'fontSize': '0.75rem',
+						'textAlign': 'center'
+					}}
+				>{index + 1 + grid.xOrigin}</p>
+			)}
 
 			{rooms}
 		</div>

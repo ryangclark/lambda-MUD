@@ -1,11 +1,11 @@
 .players-container {
 	background: rgba(0,0,0,0.1);
+	grid-column: 2 / 6;
 }
 
-/* desktop */
-@media only screen and (min-width: 40rem) {
+@media only screen and (max-width: 25rem) {
 	.players-container {
-		grid-column: 2 / 6;
+		grid-column: 1 / -1;
 	}
 }
 
@@ -68,22 +68,48 @@
 	text-transform: uppercase;
 }
 
-.player-status-container {
+.player-room-container, .player-status-container {
 	display: grid;
-	grid-gap: 1rem;
+	grid-column-gap: 1rem;
+	grid-row-gap: 0.25rem;
 	grid-template-columns: 2fr 1fr 3fr 1fr;
 	padding: 0 1rem;
 }
 
+.player-room-container {
+	grid-column-gap: 0.5rem;
+	padding: 0 0.5rem;
+}
+
+.player-room-container > h2, 
 .player-status-container > h2 {
 	grid-column: 1 / -1;
 	font-size: 1.5rem;
 	font-weight: bold;
-	margin: 1rem 0;
+	margin: 1rem 0 0;
 	width: 100%;
 }
 
 .stat-data {
-	padding-right: 0.5rem;
+	font-family: sans-serif;
+	/*padding-right: 0.5rem;*/
 	text-align: right;
 }
+
+.stat-data.entry {
+	grid-column: 2 / span 3;
+}
+
+.stat-label {
+	/*color: rgba(0,0,0,0.7);*/
+	font-family: sans-serif;
+	font-weight: bold;
+}
+
+.stat-data.full, .stat-label.full {
+	grid-column: 1 / -1;
+	text-align: left;
+}
+
+
+

@@ -6,48 +6,44 @@ const PlayerRoom = props => {
 						? props.players[props.activeToken].room 
 						: null;
 	return (
-		<div className="player-status-container">
+		<div className="player-room-container">
 			<h2>{playerRoom && `Room ${playerRoom.room_id}: ${playerRoom.title}`}</h2>
-			<table>
-				<tbody>
-					<tr>
-						<th>Coordinates:</th>
-						<td>{playerRoom && playerRoom.coordinates}</td>
-					</tr>
-					<tr>
-						<th>Elevation:</th>
-						<td>{playerRoom && playerRoom.elevation}</td>
-					</tr>
-					{/* <tr>
-						<th>Exits:</th>
-						<td>{playerRoom && playerRoom.exits}</td>
-					</tr> */}
-					<tr>
-						<th>Description:</th>
-						<td>{playerRoom && playerRoom.description}</td>
-					</tr>
-					<tr>
-						<th>Terrain:</th>
-						<td>{playerRoom && playerRoom.terrain}</td>
-					</tr>
-					<tr>
-						<th>Players Here:</th>
-						<td>{playerRoom && playerRoom.players.length}</td>
-					</tr>
-					<tr>
-						<th>Items:</th>
-						<td>{playerRoom && playerRoom.items.length}</td>
-					</tr>
-					<tr>
-						<th>Errors:</th>
-						<td>{playerRoom && playerRoom.errors[0]}</td>
-					</tr>
-					<tr>
-						<th>Messages:</th>
-						<td>{playerRoom && playerRoom.messages[0]}</td>
-					</tr>
-				</tbody>
-			</table>
+
+			<p className="stat-label">Terrain:</p>
+			<p className="stat-data">{playerRoom && playerRoom.terrain}</p>
+
+			<p className="stat-label">Coordinates:</p>
+			<p className="stat-data">{playerRoom && playerRoom.coordinates}</p>
+
+			<p className="stat-label">Elevation:</p>
+			<p className="stat-data">{playerRoom && playerRoom.elevation}</p>
+
+			<p className="stat-label">Players Here:</p>
+			<p className="stat-data">{playerRoom && playerRoom.players.length}</p>
+
+			<p className="stat-label full">Description:</p>
+			<p className="stat-data full">{playerRoom && playerRoom.description}</p>
+
+			<p className="stat-label">Items:</p>
+			{(playerRoom && playerRoom.items.length)  
+				? playerRoom.items.map(item => 
+					<p className="stat-data entry" key={item}>{item}</p>)
+				: <p className="stat-data entry">None</p>
+			}
+
+			<p className="stat-label big">Messages:</p>
+			{(playerRoom && playerRoom.messages.length)  
+				? playerRoom.messages.map(message => 
+					<p className="stat-data entry" key={message}>{message}</p>)
+				: <p className="stat-data entry">None</p>
+			}
+
+			<p className="stat-label big">Errors:</p>
+			{(playerRoom && playerRoom.errors.length)  
+				? playerRoom.errors.map(error => 
+					<p className="stat-data entry" key={error}>{error}</p>)
+				: <p className="stat-data entry">None</p>
+			}
 		</div>
 	)
 }
