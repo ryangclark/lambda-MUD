@@ -25,8 +25,8 @@ export const addPlayer = token => dispatch => {
 
 	Promise.resolve()
 		.then(() => dispatch(getPlayerRoom(token)))
-		.then(cooldown => new Promise(resolve => 
-			setTimeout(resolve, cooldown * 1000)
+		.then(res => new Promise(resolve => 
+			setTimeout(resolve, res.cooldown * 1000)
 		))
 		.then(() => dispatch(getPlayerStatus(token)))
 		.then(() => dispatch(setActivePlayer(token)))
