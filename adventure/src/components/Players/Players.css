@@ -103,11 +103,18 @@
 .stat-label {
 	/*color: rgba(0,0,0,0.7);*/
 	font-family: sans-serif;
+	font-size: 0.75rem;
 	font-weight: bold;
+	padding-top: 0.2rem;
+	text-transform: uppercase;
 }
 
-.stat-data.full, .stat-label.full {
-	grid-column: 1 / -1;
+.stat-label.left {
+	grid-column: 1;
+}
+
+.stat-data.big, .stat-label.big {
+	grid-column: 1 / -2;
 	text-align: left;
 }
 

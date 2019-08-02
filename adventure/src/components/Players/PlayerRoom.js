@@ -21,24 +21,27 @@ const PlayerRoom = props => {
 			<p className="stat-label">Players Here:</p>
 			<p className="stat-data">{playerRoom && playerRoom.players.length}</p>
 
-			<p className="stat-label full">Description:</p>
-			<p className="stat-data full">{playerRoom && playerRoom.description}</p>
+			<p className="stat-label big">Description:</p>
+			<p
+				className="stat-data big"
+				style={{'maxWidth': '95%'}}
+			>{playerRoom && playerRoom.description}</p>
 
-			<p className="stat-label">Items:</p>
+			<p className="stat-label left">Items:</p>
 			{(playerRoom && playerRoom.items.length)  
 				? playerRoom.items.map(item => 
 					<p className="stat-data entry" key={item}>{item}</p>)
 				: <p className="stat-data entry">None</p>
 			}
 
-			<p className="stat-label big">Messages:</p>
+			<p className="stat-label left">Messages:</p>
 			{(playerRoom && playerRoom.messages.length)  
 				? playerRoom.messages.map(message => 
 					<p className="stat-data entry" key={message}>{message}</p>)
 				: <p className="stat-data entry">None</p>
 			}
 
-			<p className="stat-label big">Errors:</p>
+			<p className="stat-label left">Errors:</p>
 			{(playerRoom && playerRoom.errors.length)  
 				? playerRoom.errors.map(error => 
 					<p className="stat-data entry" key={error}>{error}</p>)

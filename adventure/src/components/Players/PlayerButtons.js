@@ -10,7 +10,7 @@ const PlayerButtons = props => {
 
 	return (
 		<div className="player-buttons">
-			{['n', 's', 'e', 'w'].map(i => (
+			{['n', 's', 'w', 'e'].map(i => (
 				<button
 					className="move-button"
 					disabled={!exits.hasOwnProperty(i)}

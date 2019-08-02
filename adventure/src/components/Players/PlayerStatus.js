@@ -29,7 +29,7 @@ const PlayerStatus = props => {
 					: <p className="stat-data entry">None</p>
 				}
 
-				<p className="stat-label big">Status:</p>
+				<p className="stat-label">Status:</p>
 				{(playerStatus && playerStatus.status.length)
 					? playerStatus.status.map(status => 
 						<p className="stat-data entry" key={status}>{status}</p>)
