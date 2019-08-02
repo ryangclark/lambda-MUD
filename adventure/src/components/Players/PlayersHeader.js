@@ -54,7 +54,7 @@ const PlayersHeader = props => {
 						<input type='submit' value='Submit' />
 						<br></br>
 						{props.error && 
-							<div style={{'color': 'red', 'font-size': '0.9rem'}} >
+							<div style={{'color': 'red', 'fontSize': '0.9rem'}} >
 								{props.error}
 							</div>}
 					</form>
