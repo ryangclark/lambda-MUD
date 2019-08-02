@@ -29,8 +29,8 @@ const PlayerRoom = props => {
 
 			<p className="stat-label left">Items:</p>
 			{(playerRoom && playerRoom.items.length)  
-				? playerRoom.items.map(item => 
-					<p className="stat-data entry" key={item}>{item}</p>)
+				? playerRoom.items.map((item, index) => 
+					<p className="stat-data entry" key={`${item}-${index}`}>{item}</p>)
 				: <p className="stat-data entry">None</p>
 			}
 

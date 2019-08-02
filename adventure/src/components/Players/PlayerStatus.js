@@ -22,17 +22,17 @@ const PlayerStatus = props => {
 				<p className="stat-label">Speed:</p>
 				<p className="stat-data">{playerStatus && playerStatus.speed}</p>
 
-				<p className="stat-label">Inventory:</p>
+				<p className="stat-label inventory">Inventory:</p>
 				{(playerStatus && playerStatus.inventory.length)  
-					? playerStatus.inventory.map(item => 
-						<p className="stat-data entry" key={item}>{item}</p>)
-					: <p className="stat-data entry">None</p>
+					? playerStatus.inventory.map((item, index) => 
+						<p className="stat-data inventory" key={`${item}-${index}`}>{item}</p>)
+					: <p className="stat-data inventory">None</p>
 				}
 
-				<p className="stat-label">Status:</p>
+				<p className="stat-label left">Status:</p>
 				{(playerStatus && playerStatus.status.length)
-					? playerStatus.status.map(status => 
-						<p className="stat-data entry" key={status}>{status}</p>)
+					? playerStatus.status.map((status, index) => 
+						<p className="stat-data entry" key={`${status}-${index}`}>{status}</p>)
 					: <p className="stat-data entry">None</p>
 				}
 		</div>

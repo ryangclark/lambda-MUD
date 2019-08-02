@@ -23,6 +23,7 @@ import {
 const initialState = {
 	// activePlayer: null,
 	activeToken: '',
+	cooldown: null,
 	error: null,
 	players: {},
 		// clark: {
@@ -112,6 +113,7 @@ function playersReducer(state = initialState, action) {
 		case GET_PLAYER_ROOM_SUCCESS:
 			return {
 				...state,
+				cooldown: action.payload.cooldown,
 				error: null,
 				players: {
 					...state.players,
@@ -149,6 +151,7 @@ function playersReducer(state = initialState, action) {
 		case GET_PLAYER_STATUS_SUCCESS:
 			return {
 				...state,
+				cooldown: action.payload.cooldown,
 				error: null,
 				players: {
 					...state.players,
@@ -222,6 +225,7 @@ function playersReducer(state = initialState, action) {
 			// console.log('MOVE_PLAYER_SUCCESS', action.payload)
 			return {
 				...state,
+				cooldown: action.payload.cooldown,
 				players: {
 					...state.players,
 					[action.token]: {

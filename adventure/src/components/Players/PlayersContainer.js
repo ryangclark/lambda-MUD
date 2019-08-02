@@ -19,9 +19,9 @@ const PlayersContainer = props => {
 	return (
 		<section className="players-container">
 			<PlayersHeader {...props} />
+			<PlayerButtons {...props} />
 			<PlayerStatus {...props} />
 			<PlayerRoom {...props} />
-			<PlayerButtons {...props} />
 		</section>
 	)
 }

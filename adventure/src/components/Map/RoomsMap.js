@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
 
-import { addRoom } from './MapActions';
 import Room from './Room';
 import './RoomsMap.css';
 
@@ -17,39 +15,42 @@ const RoomsMap = props => {
 		xOrigin: 0,
 		yOrigin: 0,
 	})
+
+	const [rooms, setRooms] = useState([])
 	
 	useEffect(() => {
-		if (props.currentRoom) {
-			let room = props.rooms[props.currentRoom]
-			setGrid(prevState => ({
-				...prevState,
-				initialized: true,
-				xOrigin: room.coordinates.x - Math.ceil(prevState.width / 2),
-				yOrigin: room.coordinates.y - Math.ceil(prevState.height / 2)
-			}))
-		}
+		let room = props.rooms[props.currentRoom]
+		setGrid(prevState => ({
+			...prevState,
+			initialized: true,
+			xOrigin: room.coordinates.x - Math.ceil(prevState.width / 2),
+			yOrigin: room.coordinates.y - Math.ceil(prevState.height / 2)
+		}))
 	}, [props.currentRoom, props.rooms])
 
-	let rooms = []
-
-	for (const [roomId, roomData] of Object.entries(props.rooms)) {
-		if (roomData.coordinates.x < grid.xOrigin || 
-			roomData.coordinates.x > grid.xOrigin + grid.width ||
-			roomData.coordinates.y < grid.yOrigin ||
-			roomData.coordinates.y > grid.yOrigin + grid.height) {
-			continue
+	useEffect(() => {
+		// Create Rooms
+		let tempRooms = []
+		for (const [roomId, roomData] of Object.entries(props.rooms)) {
+			if (roomData.coordinates.x < grid.xOrigin || 
+				roomData.coordinates.x > grid.xOrigin + grid.width ||
+				roomData.coordinates.y < grid.yOrigin ||
+				roomData.coordinates.y > grid.yOrigin + grid.height) {
+				continue
+			}
+			tempRooms.push(
+				<Room
+					className={roomData.room_id === props.currentRoom ? 'current-room' : null}
+					column={roomData.coordinates.x - grid.xOrigin}
+					exits={roomData.exits}
+					roomId={roomData.room_id}
+					key={roomId}
+					row={roomData.coordinates.y - grid.yOrigin + 1}
+				/>
+			)
 		}
-		rooms.push(
-			<Room
-				className={roomData.room_id === props.currentRoom ? 'current-room' : null}
-				column={roomData.coordinates.x - grid.xOrigin}
-				exits={roomData.exits}
-				roomId={roomData.room_id}
-				key={roomId}
-				row={roomData.coordinates.y - grid.yOrigin + 1}
-			/>
-		)
-	}
+		setRooms(tempRooms)
+	}, [grid, props.currentRoom, props.rooms])
 
 	return (
 		<div
@@ -78,14 +79,4 @@ const RoomsMap = props => {
 	)
 }
 
-const mapStateToProps = state => {
-	return {
-		...state.map
-	}
-}
-
-export default connect(
-	mapStateToProps, {
-		addRoom,
-	}
-)(RoomsMap)
+export default RoomsMap

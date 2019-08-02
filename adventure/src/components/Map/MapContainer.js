@@ -6,14 +6,14 @@ import RoomsMap from './RoomsMap';
 const MapContainer = props => {
 	return (
 		<section className="map-container">
-			<RoomsMap {...props} />
+			{props.currentRoom ? <RoomsMap {...props} /> : null}
 		</section>
 	)
 }
 
 const mapStateToProps = state => {
 	return {
-		...state.roomsMap
+		...state.map
 	}
 }
 
