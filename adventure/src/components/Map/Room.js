@@ -2,7 +2,7 @@ import React from 'react';
 import './RoomsMap.css';
 
 const radius = 16
-const stroke = "green"
+const stroke = "rgba(0,0,0,0.35)"
 const strokeDasharray = "5,5"
 const strokeWidth = radius / 4
 const strokeOffset = strokeWidth / 2
@@ -37,12 +37,13 @@ const lookUp = {
 const Room = props => {
 	return (
 		<svg
+			className={props.className}
 			style={{ 'gridArea': ` -${props.row} / ${props.column} / -${props.row} / ${props.column}` }}
 			viewBox="-50 -50 100 100"
 		>
 			<circle 
 				cx="0" cy="0" r={radius}
-				fill="yellow"
+				fill="rgba(0,0,0,0.5)"
 				stroke={stroke} strokeWidth={strokeWidth}
 			/>
 

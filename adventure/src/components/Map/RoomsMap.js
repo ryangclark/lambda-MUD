@@ -41,6 +41,7 @@ const RoomsMap = props => {
 		}
 		rooms.push(
 			<Room
+				className={roomData.room_id === props.currentRoom ? 'current-room' : null}
 				column={roomData.coordinates.x - grid.xOrigin}
 				exits={roomData.exits}
 				roomId={roomData.room_id}
@@ -60,7 +61,7 @@ const RoomsMap = props => {
 				'height': '100%'
 			}}
 		>
-			{[...Array(grid.width)].map((i, index) => 
+			{/*[...Array(grid.width)].map((i, index) => 
 				<p
 					key={index}
 					style={{
@@ -70,7 +71,7 @@ const RoomsMap = props => {
 						'textAlign': 'center'
 					}}
 				>{index + 1 + grid.xOrigin}</p>
-			)}
+			)*/}
 
 			{rooms}
 		</div>
